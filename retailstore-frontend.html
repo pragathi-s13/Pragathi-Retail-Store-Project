@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRAGSS STORE</title>
+    <style>
+        .product-container {
+            margin-bottom: 30px;
+        }
+        .price-details {
+            display: none;
+        }
+        #cart {
+            display: none;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .success-message {
+            color: green;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body style="background-color:lightpink">
+
+    <h1>PRAGSS STORE</h1>
+    <h2>Anything at your doorstep!!!</h2>
+
+    <!-- Women's Dress -->
+    <div class="product-container">
+        <h3>WOMENS DRESS</h3>
+        <img src="C:\Users\Pooja\OneDrive\Desktop\laptop.jpg" alt="womens" class="product-image"><br><br>
+        <button onclick="togglePrice('womens')">VIEW PRICE</button>
+        <button onclick="addToCart('WOMENS DRESS', 1500, 'womens-success')">ADD TO CART</button>
+        <div id="womens" class="price-details">
+            <div>price:$1500<br> colors:blue,green,yellow<br>size: xl,l,m,s,xs<br></div>
+        </div>
+        <div id="womens-success" class="success-message" style="display:none;"></div>
+    </div>
+
+    <!-- Men's Dress -->
+    <div class="product-container">
+        <h3>MENS DRESS</h3>
+        <img src="C:\Users\pragathi\Downloads\mens-stylish-party-wear-suit-1000x1000.jpg"><br><br>
+        <button onclick="togglePrice('mens')">VIEW PRICE</button>
+        <button onclick="addToCart('MENS DRESS', 1700, 'mens-success')">ADD TO CART</button>
+        <div id="mens" class="price-details">
+            <div>price:$1700<br> colour:yellow,black,saffron<br>size:xl,l,m,s,xs<br></div>
+        </div>
+        <div id="mens-success" class="success-message" style="display:none;"></div>
+    </div>
+
+    <!-- Children's Dress -->
+    <div class="product-container">
+        <h3>CHILDREN DRESS</h3>
+        <img src="C:\Users\pragathi\Downloads\imgonline-com-ua-resize-9u51T1EhlSzHvvRe.webp"><br><br>
+        <button onclick="togglePrice('children')">VIEW PRICE</button>
+        <button onclick="addToCart('CHILDREN DRESS', 1000, 'children-success')">ADD TO CART</button>
+        <div id="children" class="price-details">
+            <div>price:$1000<br> colour:white,black,grey<br>size:xl,l,m,s,xs<br></div>
+        </div>
+        <div id="children-success" class="success-message" style="display:none;"></div>
+    </div>
+
+    <!-- Laptops -->
+    <div class="product-container">
+        <h2>LAPTOPS</h2>
+        <img src="C:\Users\pragathi\Downloads\Apple_16-inch-MacBook-Pro_111319.jpg.news_app_ed.jpg" width="400px" height="400px"><br><br>
+        <button onclick="togglePrice('laptop')">VIEW PRICE</button>
+        <button onclick="addToCart('LAPTOP', 100000, 'laptop-success')">ADD TO CART</button>
+        <div id="laptop" class="price-details">
+            <div>price:$100000<br> colour:white,black,grey<br></div>
+        </div>
+        <div id="laptop-success" class="success-message" style="display:none;"></div>
+    </div>
+
+    <!-- Shoes -->
+    <div class="product-container">
+        <h2>SHOES</h2>
+        <img src="C:\Users\pragathi\Downloads\-473Wx593H-464614469-pink-MODEL.webp"><br><br>
+        <button onclick="togglePrice('shoe')">VIEW PRICE</button>
+        <button onclick="addToCart('SHOES', 1200, 'shoe-success')">ADD TO CART</button>
+        <div id="shoe" class="price-details">
+            <div>price:$1200<br> colour:white,black,grey<br>size:xl,l,m,s,xs<br></div>
+        </div>
+        <div id="shoe-success" class="success-message" style="display:none;"></div>
+    </div>
+
+    <!-- Cart Section -->
+    <div id="cart">
+        <h2>Your Cart</h2>
+        <ul id="cart-items"></ul>
+        <div id="total-price">Total: $0</div>
+        <button onclick="placeOrder()">PLACE ORDER</button>
+    </div>
+
+    <button id="view-cart-button" onclick="viewCart()" style="display:none;">VIEW CART</button>
+
+    <!-- Contact Us Section -->
+    <div>
+        <h2>CONTACT US</h2>
+        <label for="uname">USER NAME</label>
+        <input type="text" id="uname" placeholder="user name"><br><br>
+        <label for="email">EMAIL</label>
+        <input type="email" id="email" placeholder="email"><br><br>
+        <label for="ph">CONTACT</label>
+        <input type="text" id="ph" placeholder="phone number"><br><br>
+        <label for="rate">RATING(1-5)</label>
+        <input type="text" id="rate" placeholder="rating"><br><br>
+        <label for="add">Address:</label>
+        <input type="text" id="add"><br><br>
+        <button onclick="submitDetails()">SUBMIT</button>
+        <p id="orderSuccessMessage" style="display:none;">Thank you! Your order has been placed.</p>
+        <br>
+    </div>
+
+    <script>
+        let cart = [];
+
+        function togglePrice(product) {
+            var details = document.getElementById(product);
+            if (details.style.display === "none" || details.style.display === "") {
+                details.style.display = "block";
+            } else {
+                details.style.display = "none";
+            }
+        }
+
+        function addToCart(productName, price, successMessageId) {
+            // Add product to cart
+            cart.push({ productName, price });
+
+            // Show the success message for the specific product
+            const successMessage = document.getElementById(successMessageId);
+            successMessage.textContent = `${productName} has been added to your cart! Please check the "VIEW CART" button to see your selected items.`;
+            successMessage.style.display = "block";
+
+            // Show the "View Cart" button after an item is added
+            document.getElementById("view-cart-button").style.display = "block";
+        }
+
+        function viewCart() {
+            const cartItemsList = document.getElementById('cart-items');
+            const totalPriceElem = document.getElementById('total-price');
+            
+            // Clear existing cart items and total price
+            cartItemsList.innerHTML = '';
+            let totalPrice = 0;
+
+            // Display the cart items
+            cart.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${item.productName} - $${item.price}`;
+                cartItemsList.appendChild(listItem);
+                totalPrice += item.price;
+            });
+
+            // Display the total price
+            totalPriceElem.textContent = `Total: $${totalPrice}`;
+            
+            // Show the cart section
+            document.getElementById('cart').style.display = 'block';
+        }
+
+        function placeOrder() {
+            // Simulate placing the order
+            alert('Thank you! Your order has been placed.');
+            cart = [];  // Empty the cart after placing the order
+
+            // Clear the cart display
+            document.getElementById('cart').style.display = 'none';
+            document.getElementById('view-cart-button').style.display = 'none';
+        }
+
+        function submitDetails() {
+            // Show alert when "Submit" button is clicked
+            alert("Your details are submitted, our technician will reach you soon!!!");
+        }
+    </script>
+</body>
+</html>
